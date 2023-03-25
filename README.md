@@ -15,4 +15,4 @@ And then we can launch the test:
 
 # What are the automated test cases
 
-Automated test cases execute the tests automatically, manage test data, and utilize results. In this case the login.spec.js is automated, allowing to enter the system automatically.
+Automated test cases execute the tests automatically, manage test data, and utilize results. In this case the automated test cases include adding client automatically, as well as filling in all the info needed while adding. Also there is an autologin test case that is also automated as well as there is a view and edit page test cases that is automated, allowing to view number of clients and edit their information.
