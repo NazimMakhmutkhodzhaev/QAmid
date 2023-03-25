@@ -1,32 +1,53 @@
-describe("Clients suit", ()=>{
-    afterEach(async)
-    it("Create client", async ()=>{
-        await browser.url('http://167.114.201.175:5000/login'); 
-        await browser.pause(6000);
-        const loginField = await $('input[name="userName"]');
-        await loginField.setValue("Admin");
-        const passwordField = await $('input.password');
-        await passwordField.setValue("Admin@Navi");
-        await $('button[type="submit"]').click();
-        await browser.pause(10000);
+const LoginPage = require( "../pageobjects/LoginPage");
 
-        await $('clients-add-user-dialog').click();
-        await browser.pause(6000);
 
-        const lastName = await $ ('input[clients-add-user-dialog]');
-        await lastName.setValue('Sultanov')
+describe('Clients Suit', ()=> {
+    beforeEach( async() => {
+        await LoginPage.open();
+        await LoginPage.doLogin('Admin', 'Admin@Navi')
+    })
+
+    afterEach( async()=>{
+        await browser.reloadSession();
+    })
+
+    it('Create client', async ()=> {
+        // здесь идет создание клиента
+        await $('button.clients-add-user-dialog').click();
+        await browser.pause(5000);
+
+        // проверка что форма регистрации клиента открылась
+        const userForm = await $('div.add-user-modal form');
+        await expect(userForm).toExist();
+
+        // далее в поля формы ввожу данные
+        const surnameField = await $('input[formcontrolname="userSurname"]');
+        await surnameField.setValue('Pottuh');
+
+        const firstnameField = await $('input[formcontrolname="userName"]');
+        await firstnameField.setValue('Haary');
+
+        const maleOptionRadio = await $('mat-radio-group mat-radio-button:nth-child(1) div[class="mat-radio-label-content"]');
+        await maleOptionRadio.click();
+
+        const emailField = await $('input[formcontrolname="email"]');
+        await emailField.setValue('haary.pottuh@gmail.com');
 
         const phoneNumberField = await $('input[formcontrolname="phone"]');
-        await phoneNumberField.setValue('+996777180027');
+        await phoneNumberField.setValue('996765390601');
 
         const datebirthField = await $('input[formcontrolname="birthday"]');
-        await datebirthField.setValue('05.07.1999');
+        await datebirthField.setValue('12.12.2001');
 
-        const setButton = await $('button[name="save"]');
-        await setButton.setButton.click();
-        await browser.pause(6000);
-        
+        const saveButton = await $('button[name="save"]');
+        await saveButton.click();
+        await browser.pause(10000);
+
+        // принять алерт 
         await browser.acceptAlert();
-        await browser.pause(6000);
+        await browser.pause(5000);
+    })
+
+    it('Open to read', async() => {
     })
 })
